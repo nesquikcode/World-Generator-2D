@@ -1,0 +1,5 @@
+.__pycache__/
+.goodmaps/
+map.json
+map.png
+bot.py
