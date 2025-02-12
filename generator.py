@@ -1,6 +1,36 @@
 import pygame, random, json, os
 from PIL import Image
-from settings import COLUMNS, ROWS, DIRTCHANCE, DIRT, DARKDIRT, WATER, SUBWATER, WIDTH, HEIGHT, BLOCKX, BLOCKY, SAND, ITERATIONS, WATER_ITERATIONS, SUBWATER_ITERATIONS, FOREST_ITERATIONS, FORESTCHANCE, MOUNTAINS, HIGH_MOUNTAINS, MOUNTAINS_ITERATIONS, HIGH_MOUNTAINS_ITERATIONS, MOUNTAINS_CHANCE, HIGH_MOUNTAINS_CHANCE, SNOW, SNOW_CHANCE, SNOW_ITERATIONS, FINAL_ITERATIONS, ENABLE_LOAD_CALLBACK, CONSOLE_MODE
+from settings import (
+    COLUMNS,
+    ROWS, 
+    DIRTCHANCE,
+    DIRT,
+    DARKDIRT,
+    WATER,
+    SUBWATER,
+    WIDTH,
+    HEIGHT,
+    BLOCKX, 
+    BLOCKY,
+    SAND,
+    ITERATIONS,
+    WATER_ITERATIONS,
+    SUBWATER_ITERATIONS,
+    FOREST_ITERATIONS,
+    FORESTCHANCE,
+    MOUNTAINS,
+    HIGH_MOUNTAINS,
+    MOUNTAINS_ITERATIONS,
+    HIGH_MOUNTAINS_ITERATIONS,
+    MOUNTAINS_CHANCE,
+    HIGH_MOUNTAINS_CHANCE,
+    SNOW,
+    SNOW_CHANCE,
+    SNOW_ITERATIONS,
+    FINAL_ITERATIONS,
+    ENABLE_LOAD_CALLBACK,
+    CONSOLE_MODE
+)
 global screen
 screen = None
 
@@ -37,45 +67,11 @@ def generate(load_bar_func = loadbar):
             dirt_counter = 0
             water_counter = 0
 
-            try:
-                if worldmap[up_left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-            
-            try:
-                if worldmap[up] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "d": dirt_counter += 1
+                    else: water_counter += 1
+                except: pass
 
             if x == "d":
                 if water_counter in [3,6,7,8]:
@@ -103,54 +99,13 @@ def generate(load_bar_func = loadbar):
             dirt_counter = 0
             water_counter = 0
             sand_counter = 0
-
-            try:
-                if worldmap[up_left] == "d": dirt_counter += 1
-                elif worldmap[up_left] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "d": dirt_counter += 1
-                elif worldmap[up_right] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
             
-            try:
-                if worldmap[up] == "d": dirt_counter += 1
-                elif worldmap[up] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "d": dirt_counter += 1
-                elif worldmap[left] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "d": dirt_counter += 1
-                elif worldmap[right] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "d": dirt_counter += 1
-                elif worldmap[down] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "d": dirt_counter += 1
-                elif worldmap[down_left] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "d": dirt_counter += 1
-                elif worldmap[down_right] == "s": sand_counter += 1
-                else: water_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "d": dirt_counter += 1
+                    elif worldmap[side] == "s": sand_counter += 1
+                    else: water_counter += 1
+                except: pass
 
             if water_counter > 0 and dirt_counter > 1:
                 worldmap[center] = "s"
@@ -181,62 +136,14 @@ def generate(load_bar_func = loadbar):
             water_counter = 0
             sand_counter = 0
             subwater_counter = 0
-
-            try:
-                if worldmap[up_left] == "d": dirt_counter += 1
-                elif worldmap[up_left] == "s": sand_counter += 1
-                elif worldmap[up_left] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "d": dirt_counter += 1
-                elif worldmap[up_right] == "s": sand_counter += 1
-                elif worldmap[up_right] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
             
-            try:
-                if worldmap[up] == "d": dirt_counter += 1
-                elif worldmap[up] == "s": sand_counter += 1
-                elif worldmap[up] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "d": dirt_counter += 1
-                elif worldmap[left] == "s": sand_counter += 1
-                elif worldmap[left] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "d": dirt_counter += 1
-                elif worldmap[right] == "s": sand_counter += 1
-                elif worldmap[right] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "d": dirt_counter += 1
-                elif worldmap[down] == "s": sand_counter += 1
-                elif worldmap[down] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "d": dirt_counter += 1
-                elif worldmap[down_left] == "s": sand_counter += 1
-                elif worldmap[down_left] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "d": dirt_counter += 1
-                elif worldmap[down_right] == "s": sand_counter += 1
-                elif worldmap[down_right] == "sw": subwater_counter += 1
-                else: water_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "d": dirt_counter += 1
+                    elif worldmap[side] == "s": sand_counter += 1
+                    elif worldmap[side] == "sw": subwater_counter += 1
+                    else: water_counter += 1
+                except: pass
 
             if water_counter > 0 and sand_counter > 0 and worldmap[center] == "w":
                 worldmap[center] = "sw"
@@ -270,46 +177,12 @@ def generate(load_bar_func = loadbar):
 
             dirt_counter = 0
             water_counter = 0
-
-            try:
-                if worldmap[up_left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
             
-            try:
-                if worldmap[up] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "d": dirt_counter += 1
-                else: water_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "d": dirt_counter += 1
+                    else: water_counter += 1
+                except: pass
 
             if x == "d":
                 if water_counter in [3,6,7,8]:
@@ -344,46 +217,12 @@ def generate(load_bar_func = loadbar):
 
             forest_counter = 0
             mountains_counter = 0
-
-            try:
-                if worldmap[up_left] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
             
-            try:
-                if worldmap[up] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "dd": forest_counter += 1
-                else: mountains_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "dd": forest_counter += 1
+                    else: mountains_counter += 1
+                except: pass
 
             if worldmap[center] == "dd":
                 if mountains_counter in [3,6,7,8]:
@@ -419,46 +258,12 @@ def generate(load_bar_func = loadbar):
 
             high_mountains_counter = 0
             mountains_counter = 0
-
-            try:
-                if worldmap[up_left] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[up_right] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
             
-            try:
-                if worldmap[up] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[left] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[right] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_left] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
-
-            try:
-                if worldmap[down_right] == "hm": high_mountains_counter += 1
-                else: mountains_counter += 1
-            except: pass
+            for side in [up_left, up, up_right, right, left, down_left, down, down_right]:
+                try:
+                    if worldmap[side] == "hm": high_mountains_counter += 1
+                    else: mountains_counter += 1
+                except: pass
 
             if worldmap[center] == "hm":
                 if mountains_counter in [3,6,7,8]:
@@ -527,7 +332,7 @@ if __name__ == "__main__":
     pygame.mixer.init()
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    clock = pygame.Clock()
+    clock = pygame.time.Clock()
     fps = 60
 
     run = True

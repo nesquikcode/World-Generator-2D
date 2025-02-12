@@ -1,7 +1,9 @@
+import random
+
 # world generation
 ITERATIONS = 200
-COLUMNS = 200
-ROWS = 200
+COLUMNS = 500
+ROWS = 500
 
 # generator settings
 WATER_ITERATIONS = 128
@@ -18,8 +20,8 @@ DIRTCHANCE = "1:2"
 FORESTCHANCE = "1:2"
 
 # window size (for disable PIL rescaling on saved image use parameters equal to columns and rows. if you cant open large window set 'CONSOLE_MODE' to True.)
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 1000
+HEIGHT = 1000
 
 # don't change, parameters for view
 BLOCKX = WIDTH/COLUMNS
